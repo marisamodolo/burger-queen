@@ -1,0 +1,31 @@
+.rd_tab { 
+	display:none;
+	position: absolute;
+}
+
+.rd_tab:checked ~ label { 
+	background-color: #ffffff;
+    color:#0d112e;
+}
+
+.rd_tab:checked ~ .tab-content{
+	display: block;
+}
+
+.rd_tab { 
+	display:none;
+	position: absolute;
+}
+
+.tab_label{
+    display: block;
+    width: 11.3vw;
+    background-color: #0d112e;
+    padding: 25px;
+    font-size: 2rem;
+    color:#fff;
+    cursor: pointer;
+    text-align: center;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
