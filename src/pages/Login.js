@@ -1,8 +1,7 @@
 import React from 'react';
-import TabLogin from '../components/TabLogin';
-import TabCad from '../components/TabCad';
-import '../components/LoginBox.css'
-import Button from '../components/Button.js'
+import Tab from '../components/Tab';
+import LoginBox from '../components/LoginBox'
+import CadBox from '../components/CadBox'
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
 
@@ -40,22 +39,26 @@ class Home extends React.Component {
         <nav className="nav_tabs">
 			    <ul>
 				    <li>
-              <TabLogin id="tab1" text="LOGIN" checked="true"
+              <Tab id="tab1" text="LOGIN" checked="true"> 
+                <LoginBox 
                 valueEmail={this.state.email}
                 valueSenha={this.state.senha}
                 onChangeEmail={(e) => this.handleChange(e, "email")}
                 onChangeSenha={(e) => this.handleChange(e, "senha")}
                 onClick={this.signIn}
-                textBtn="Entrar"/>
+                textBtn={"ENTRAR"}/>
+                </Tab>
             </li>
             <li>
-              <TabCad id="tab2" text="CADASTRO"
-                  valueEmail={this.state.email}
-                  valueSenha={this.state.senha}
-                  onChangeEmail={(e) => this.handleChange(e, "email")}
-                  onChangeSenha={(e) => this.handleChange(e, "senha")}
-                  onClick={this.signIn}
-                  textBtn="Cadastrar"/>
+              <Tab id="tab2" text="CADASTRO">  
+                <CadBox 
+                valueEmail={this.state.email}
+                valueSenha={this.state.senha}
+                onChangeEmail={(e) => this.handleChange(e, "email")}
+                onChangeSenha={(e) => this.handleChange(e, "senha")}
+                onClick={this.createUser}
+                textBtn={"ENTRAR"}/>
+              </Tab>
             </li>
           </ul>
         </nav>

@@ -26,7 +26,6 @@ function CadBox (props){
                     </label>
                 </div>
                 <Button text={props.textBtn} onClick={props.onClick} />
-
             </section>
     );
 }
