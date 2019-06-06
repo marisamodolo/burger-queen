@@ -13,6 +13,8 @@ class Home extends React.Component {
     this.state = {
       email: "",
       senha: "",
+      name: "",
+      area: "hall"
     };
   }
 
@@ -23,14 +25,29 @@ class Home extends React.Component {
   }
 
   createUser = () => {
-    this.props.createUserWithEmailAndPassword(this.state.email, this.state.senha);
+    this.props.createUserWithEmailAndPassword(this.state.email, this.state.senha)
+    .then((result) => {
+      firebase.firestore().collection('users').doc(result.user.uid).set({
+        'name': this.state.name,
+        'area' : this.state.area
+      }).then(() => {
+      return this.props.history.push("/" + this.state.area)
+      })
+    });
   }
 
   signIn = () => {
     this.props.signInWithEmailAndPassword(this.state.email, this.state.senha)
-      .then(() => {
-        alert("uhul");
-      });
+    .then((result) => {
+      firebase.firestore().collection('users').doc(result.user.uid).get().then((result) =>{
+        return this.props.history.push("/" + result.data().area)
+      })
+
+    })
+  }
+
+  sendToDb(){
+
   }
 
   render() {
@@ -52,10 +69,13 @@ class Home extends React.Component {
             <li>
               <Tab id="tab2" text="CADASTRO">  
                 <CadBox 
+                valueName={this.props.name}
                 valueEmail={this.state.email}
                 valueSenha={this.state.senha}
+                onChangeName={(e) => this.handleChange(e, "name")}
                 onChangeEmail={(e) => this.handleChange(e, "email")}
                 onChangeSenha={(e) => this.handleChange(e, "senha")}
+                onChangePlace={(e) => this.handleChange(e, "area")}
                 onClick={this.createUser}
                 textBtn={"ENTRAR"}/>
               </Tab>

@@ -1,32 +1,37 @@
 import React from 'react';
 import Button from './Button.js'
 import Input from './Input'
-import './LoginBox.css'
+import './CadBox.css'
 
 function CadBox (props){
     return (
-            <section>
+        <section className="gridCad">
+            <p className="cad-p-name">NOME</p>
+            <div className= "div-inp-name">
                 <Input value={props.valueName}
-                    placeholder="Nome"
-                    onChange={props.onChangeEmail} />
+                onChange={props.onChangeName} />
+                <i className="fas fa-user"></i>
+            </div>
+            <p className="cad-p-email">E-MAIL</p>
+            <div className= "div-inp-email">
                 <Input value={props.valueEmail}
-                    placeholder="E-Mail"
-                    onChange={props.onChangeEmail} />
-                <Input value={props.valueSenha}
-                    placeholder={"Senha"}
-                    onChange={props.onChangeSenha} />
-                <div>
-                    <input type="radio" id="opt-salao" defaultChecked/> 
-                    <label htmlFor="opt-salao">
-                        Salão
-                    </label>
-                    <input type="radio" id="opt-coz"/> 
-                    <label htmlFor="opt-coz">
-                        Cozinha
-                    </label>
+                onChange={props.onChangeEmail} />
+                <i className="fas fa-envelope"></i>
+            </div>
+            <p className="cad-p-senha">SENHA</p>
+                <div className= "div-inp-senha">
+                <Input type="password" value={props.valueSenha}
+                onChange={props.onChangeSenha} />
+                <i className="fas fa-lock"></i>
                 </div>
-                <Button text={props.textBtn} onClick={props.onClick} />
-            </section>
+            <form id="form-place" className= "div-inp-opt">
+                <input type="radio" className="opt-salao" name="option" value="hall" onChange={props.onChangePlace} id="opt-salao" defaultChecked/> 
+                <label htmlFor="opt-salao">SALÃO</label>
+                <input type="radio" className="opt-coz" name="option" value="kitchen" onChange={props.onChangePlace} id="opt-coz"/> 
+                <label htmlFor="opt-coz">COZINHA</label>
+            </form>
+            <Button className="btn cad-btn" text={props.textBtn} onClick={props.onClick} />
+        </section>
     );
 }
 

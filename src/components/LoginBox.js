@@ -5,21 +5,21 @@ import './LoginBox.css'
 
 function LoginBox (props){
     return (
-            <section class="grid">
-                <p class="p-email">E-MAIL</p>
+            <section className="gridLog">
+                <p className="p-email">E-MAIL</p>
                 <div className= "inp-email">
                 <Input value={props.valueEmail}
                     onChange={props.onChangeEmail} />
-                    <i class="fas fa-envelope"></i>
+                    <i className="fas fa-envelope"></i>
                 </div>
-                <p class="p-senha">SENHA</p>
+                <p className="p-senha">SENHA</p>
                 <div className= "inp-senha">
-                <Input value={props.valueSenha}
+                <Input type="password" value={props.valueSenha}
                     onChange={props.onChangeSenha} />
-                    <i class="fas fa-lock"></i>
-                    <p class="p-forgotpass">ESQUECEU SUA SENHA?</p>
+                    <i className="fas fa-lock"></i>
+                    <p className="p-forgotpass">ESQUECEU SUA SENHA?</p>
                 </div>
-                <Button text={props.textBtn} onClick={props.onClick} />
+                <Button className="btn" text={props.textBtn} onClick={props.onClick} />
             </section>
     );
 }
