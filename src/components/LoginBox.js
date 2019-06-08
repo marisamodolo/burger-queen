@@ -18,8 +18,8 @@ function LoginBox (props){
                 <Input type="password" value={props.valueSenha}
                     onChange={props.onChangeSenha} />
                     <i className="fas fa-lock"></i>
-                    <Link href={props.href} className="p-forgotpass">ESQUECEU SUA SENHA?</Link>
                 </div>
+                    <button onClick={props.fgtOnClick} className="btn-forgotpass">ESQUECEU SUA SENHA?</button>
                 <Button className="btn" text={props.textBtn} onClick={props.onClick} />
             </section>
     );

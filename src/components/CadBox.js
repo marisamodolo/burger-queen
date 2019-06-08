@@ -25,14 +25,14 @@ function CadBox (props){
                 <i className="fas fa-lock"></i>
                 </div>
             <form id="form-place" className= "div-inp-opt">
-                <container className="opt-salao">
+                <section className="opt-salao">
                     <input type="radio" name="option" value="hall" onChange={props.onChangePlace} id="opt-salao" defaultChecked/> 
                     <label htmlFor="opt-salao">SALÃO</label>
-                </container>
-                <container className="opt-coz">
+                </section>
+                <section className="opt-coz">
                     <input type="radio" name="option" value="kitchen" onChange={props.onChangePlace} id="opt-coz"/> 
                     <label htmlFor="opt-coz">COZINHA</label>
-                </container>
+                </section>
             </form>
             <Button className="btn cad-btn" text={props.textBtn} onClick={props.onClick} />
         </section>
