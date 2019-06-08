@@ -2,6 +2,7 @@ import React from 'react';
 import Button from './Button.js'
 import Input from './Input'
 import './LoginBox.css'
+import { Link } from 'react-router-dom';
 
 function LoginBox (props){
     return (
@@ -17,7 +18,7 @@ function LoginBox (props){
                 <Input type="password" value={props.valueSenha}
                     onChange={props.onChangeSenha} />
                     <i className="fas fa-lock"></i>
-                    <p className="p-forgotpass">ESQUECEU SUA SENHA?</p>
+                    <Link href={props.href} className="p-forgotpass">ESQUECEU SUA SENHA?</Link>
                 </div>
                 <Button className="btn" text={props.textBtn} onClick={props.onClick} />
             </section>

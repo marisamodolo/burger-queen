@@ -1,7 +1,8 @@
 import React from 'react';
 import Tab from '../components/Tab';
-import LoginBox from '../components/LoginBox'
-import CadBox from '../components/CadBox'
+import LoginBox from '../components/LoginBox';
+import CadBox from '../components/CadBox';
+import '../App.css';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
 
@@ -52,7 +53,9 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
+      <header className="App-header">
+      <div class="div-nav">
         <nav className="nav_tabs">
 			    <ul>
 				    <li>
@@ -82,6 +85,8 @@ class Home extends React.Component {
             </li>
           </ul>
         </nav>
+      </div>
+      </header>
       </div>
     )
   }
