@@ -1,0 +1,59 @@
+.gridLog{
+	display: grid;
+	grid-template-rows:1fr 2fr 1fr 2fr 2fr 2fr 1fr;
+}
+
+.p-email, .p-senha{
+	grid-row:1;
+	text-align: start;
+	align-self: end;
+}
+
+.inp-email, .inp-senha{
+	grid-row:2;
+	position: relative;
+
+}
+
+.inp-email input, .inp-senha input{
+	box-sizing: border-box;
+	width: 100%;
+	height: 70%;
+	padding-left: 40px;
+	font-size: 1rem;
+	background-color: #d8d6d6;
+	border: none;
+	border-radius: 3px;
+}
+
+.inp-senha i, .inp-email i{
+	position: absolute;
+	left: 8px;
+	top: 5px;
+	font-size: 1.5rem;
+	color:#555557;
+}
+
+.p-senha{
+	grid-row:3;
+}
+
+.inp-senha{
+	grid-row: 4;
+}
+
+.btn-forgotpass{
+	grid-row: 5;
+	font-size: 0.8rem;
+	border: none;
+	background-color: #ffffff;
+	cursor: pointer;
+	color: #420039;
+	justify-self: end;
+	align-self: flex-start;
+}
+
+.btn{
+	grid-row: 6;
+	justify-self: center;
+}

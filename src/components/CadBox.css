@@ -1,0 +1,80 @@
+.gridCad{
+	display: grid;
+	grid-template-rows: 1fr 2fr 1fr 2fr 1fr 2fr 2fr 2fr;
+}
+
+.cad-p-email, .cad-p-senha, .cad-p-name{
+	grid-row:1;
+	text-align: start;
+	align-self: end;
+}
+
+.div-inp-name, .div-inp-email, .div-inp-senha{
+	grid-row:2;
+	position: relative;
+}
+
+.div-inp-email input, .div-inp-senha input, .div-inp-name input{
+	box-sizing: border-box;
+	width: 100%;
+	height: 70%;
+	padding-left: 40px;
+	font-size: 1rem;
+	background-color: #d8d6d6;
+	border: none;
+	border-radius: 3px;
+}
+
+.div-inp-senha i, .div-inp-email i, .div-inp-name i{
+	position: absolute;
+	left: 8px;
+	top: 5px;
+	font-size: 1.5rem;
+	color:#555557;
+}
+
+.cad-p-email{
+    grid-row: 3;
+}
+
+.div-inp-email{
+    grid-row: 4;
+}
+
+.cad-p-senha{
+	grid-row:5;
+}
+
+.div-inp-senha{
+	grid-row: 6;
+}
+
+.div-inp-opt{
+	grid-row: 7;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: 0;	
+}
+
+.opt-coz{
+	grid-column: 2;
+    align-content: center;
+}
+
+.opt-coz label, .opt-salao label{
+	font-size: 1.5rem;
+	padding-left: 10px;
+	font-weight: 700;
+	color: #ff6620;
+	vertical-align: bottom;
+}
+
+.opt-salao{
+	grid-column: 1;
+    align-content: center;
+}
+
+.cad-btn{
+	grid-row: 8;
+	justify-self: center;
+}
