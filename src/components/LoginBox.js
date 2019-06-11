@@ -2,7 +2,6 @@ import React from 'react';
 import Button from './Button.js'
 import Input from './Input'
 import './LoginBox.css'
-import { Link } from 'react-router-dom';
 
 function LoginBox (props){
     return (

@@ -85,7 +85,7 @@ class Home extends React.Component {
         <nav className="nav_tabs">
 			    <ul>
 				    <li>
-              <Tab id="tab1" text="LOGIN" checked="true"> 
+              <Tab classNameContent="tab-content" id="tab1" text="LOGIN" checked="true"> 
                 <LoginBox 
                 valueEmail={this.state.email}
                 valueSenha={this.state.senha}
@@ -97,7 +97,7 @@ class Home extends React.Component {
                 </Tab>
             </li>
             <li>
-              <Tab id="tab2" text="CADASTRO">  
+              <Tab classNameContent="tab-content" id="tab2" text="CADASTRO">  
                 <CadBox 
                 valueName={this.props.name}
                 valueEmail={this.state.email}

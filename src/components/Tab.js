@@ -8,7 +8,7 @@ function TabLogin (props){
         <label htmlFor={props.id} className="tab_label">
             {props.text}
         </label>
-        <div className="tab-content">
+        <div className={props.classNameContent}>
                 {props.children}
               </div>
         </div>
