@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Tab from '../components/Tab';
 import LoginBox from '../components/LoginBox';
 import CadBox from '../components/CadBox';
@@ -11,41 +11,22 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 
 const firebaseAppAuth = firebase.auth();
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      senha: "",
-      name: "",
-      area: "hall",
-      modalIsOpen: false
-    };
-  }
+function LoginTest (props) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [area, setArea] = useState("hall");
 
-  openModal(){
-    this.setState({modalIsOpen: true})
-  }
-
-  closeModal(){
-    this.setState({modalIsOpen: false})
-  }
-
-  handleChange = (event, element) => {
-    const newState = this.state;
-    newState[element] = event.target.value
-    this.setState(newState);
-  }
-
-  createUser = () => {
-    if (this.state.name !== "") {
-      this.props.createUserWithEmailAndPassword(this.state.email, this.state.senha)
+  function createUser () {
+    if (name !== "") {
+      firebaseAppAuth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-          firebase.firestore().collection('users').doc(result.user.uid).set({
-            'name': this.state.name,
-            'area' : this.state.area
-          })
-            return this.props.history.push("/" + this.state.area)   
+        firebase.firestore().collection('users').doc(result.user.uid).set({
+          'name': name,
+          'area' : area
+        })
+        return props.history.push("/" + area)   
       })
       .catch(() => {
         alert("Oops. Algo deu errado! :( \nCheque se o e-mail está escrito corretamente e se sua senha possui pelo menos 6 caracteres.")
@@ -55,73 +36,70 @@ class Home extends React.Component {
     }
   }
 
-  signIn = () => {
-    this.props.signInWithEmailAndPassword(this.state.email, this.state.senha)
+  function signIn () {
+    firebaseAppAuth.signInWithEmailAndPassword(email, password)
     .then((result) => {
       firebase.firestore().collection('users').doc(result.user.uid).get().then((result) =>{
-        return this.props.history.push("/" + result.data().area)
+        return props.history.push("/" + result.data().area)
       })
     }).catch(() => {
       alert("E-mail e/ou senha incorreto(s).");
     });
   }
 
-  recPass = () =>  {
-    firebase.auth().sendPasswordResetEmail(this.state.email).then(() => {
+  function recPass ()  {
+    firebaseAppAuth.sendPasswordResetEmail(email).then(() => {
       alert("E-mail enviado!");
-      this.setState({modalIsOpen: false})
+      setModalIsOpen(false)
     }).catch(() => {
       alert("Oops. Algo deu errado! :( \nCheque se o e-mail está escrito corretamente.");
     });
 
-  }
+  };
 
-
-  render() {
-    return (
-      <div className="App">
+  return (
+    <div className="App">
       <header className="App-header">
-      <div className="div-nav">
-        <nav className="nav_tabs">
-			    <ul>
-				    <li>
-              <Tab classNameContent="tab-content" id="tab1" text="LOGIN" checked="true"> 
-                <LoginBox 
-                valueEmail={this.state.email}
-                valueSenha={this.state.senha}
-                onChangeEmail={(e) => this.handleChange(e, "email")}
-                onChangeSenha={(e) => this.handleChange(e, "senha")}
-                fgtOnClick={(e) => this.openModal(e)}
-                onClick={this.signIn}
-                textBtn={"ENTRAR"}/>
+        <div className="div-nav">
+          <nav className="nav_tabs">
+  			    <ul>
+	  			    <li>
+                <Tab classNameContent="tab-content" id="tab1" text="LOGIN" checked="true"> 
+                  <LoginBox 
+                  valueEmail={email}
+                  valueSenha={password}
+                  onChangeEmail={event => setEmail(event.target.value)}
+                  onChangeSenha={event => setPassword(event.target.value)}
+                  fgtOnClick={(e) => setModalIsOpen(true)}
+                  onClick={() => signIn()}
+                  textBtn={"ENTRAR"}/>
                 </Tab>
-            </li>
-            <li>
-              <Tab classNameContent="tab-content" id="tab2" text="CADASTRO">  
-                <CadBox 
-                valueName={this.props.name}
-                valueEmail={this.state.email}
-                valueSenha={this.state.senha}
-                onChangeName={(e) => this.handleChange(e, "name")}
-                onChangeEmail={(e) => this.handleChange(e, "email")}
-                onChangeSenha={(e) => this.handleChange(e, "senha")}
-                onChangePlace={(e) => this.handleChange(e, "area")}
-                onClick={this.createUser}
-                textBtn={"ENTRAR"}/>
-              </Tab>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <Modal className="modal-style" isOpen={this.state.modalIsOpen} onRequestClose={()=>this.closeModal()}>
-      <PasswordModal onChangeEmail={(e) => this.handleChange(e, "email")} valueEmail={this.state.email} textBtn="ENVIAR" onClick={(e) => this.recPass()} onClickClose={()=>this.closeModal()}/>  
-      </Modal>
+              </li>
+              <li>
+                <Tab classNameContent="tab-content" id="tab2" text="CADASTRO">  
+                  <CadBox 
+                  valueName={name}
+                  valueEmail={email}
+                  valueSenha={password}
+                  onChangeName={event => setName(event.target.value)}
+                  onChangeEmail={event => setEmail(event.target.value)}
+                  onChangeSenha={event => setPassword(event.target.value)}
+                  onChangePlace={event => setArea(event.target.value)}
+                  onClick={() => createUser()}
+                  textBtn={"ENTRAR"}/>
+                </Tab>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <Modal className="modal-style" isOpen={modalIsOpen} onRequestClose={()=>setModalIsOpen(false)}>
+          <PasswordModal onChangeEmail={event => setEmail(event.target.value)} valueEmail={email} textBtn="ENVIAR" onClick={() => recPass()} onClickClose={()=>setModalIsOpen(false)}/>  
+        </Modal>
       </header>
-      </div>
-    )
-  }
+    </div>
+  );
 }
 
 export default withFirebaseAuth({
   firebaseAppAuth,
-})(Home);
+})(LoginTest);

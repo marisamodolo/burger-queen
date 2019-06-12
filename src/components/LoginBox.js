@@ -8,7 +8,7 @@ function LoginBox (props){
             <section className="gridLog">
                 <p className="p-email">E-MAIL</p>
                 <div className= "inp-email">
-                <Input value={props.valueEmail}
+                <Input type="text" value={props.valueEmail}
                     onChange={props.onChangeEmail} />
                     <i className="fas fa-envelope"></i>
                 </div>

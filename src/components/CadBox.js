@@ -8,13 +8,13 @@ function CadBox (props){
         <section className="gridCad">
             <p className="cad-p-name">NOME</p>
             <div className= "div-inp-name">
-                <Input value={props.valueName}
+                <Input type="text" value={props.valueName}
                 onChange={props.onChangeName} />
                 <i className="fas fa-user"></i>
             </div>
             <p className="cad-p-email">E-MAIL</p>
             <div className= "div-inp-email">
-                <Input value={props.valueEmail}
+                <Input type="text" value={props.valueEmail}
                 onChange={props.onChangeEmail} />
                 <i className="fas fa-envelope"></i>
             </div>
