@@ -2,7 +2,6 @@ import React from 'react';
 import Button from './Button.js'
 import Input from './Input'
 import './Modal.css'
-import { Link } from 'react-router-dom';
 
 function PasswordModal (props){
     return (

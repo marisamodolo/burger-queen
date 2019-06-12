@@ -2,7 +2,7 @@ import React from 'react';
 import Login from './pages/Login';
 import Kitchen from './pages/Kitchen';
 import Hall from './pages/Hall';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 function App() {
   return (

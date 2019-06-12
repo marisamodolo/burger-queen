@@ -1,6 +1,8 @@
 import React from 'react';
 import Tab from '../components/Tab';
-import Button from '../components/Button'
+import Button from '../components/Button';
+import OrderList from '../components/OrderList';
+import ListItem from '../components/ListItem';
 import './Hall.css'
 import firebase from '../firebaseConfig';
 
@@ -112,12 +114,12 @@ const productDayTime = [
 				    <li>
               <Tab classNameContent="tab-content order-content" id="tab1" text="MANHÃ" checked="true"> 
               <div className="content div-morn">
-              <p className="title-hamb">BEBIDAS</p>
-              <p className="title-drinks">LANCHES</p>
+              <p className="title-order-one">BEBIDAS</p>
+              <p className="title-order-three">LANCHES</p>
                 {
                   productMorning.map((product, index) => {
                     const classPosition = "btn listItem btn" + index;
-                    const valBtn = product.name +"  R$"+ product.price;
+                    const valBtn = product.name +"  R$"+ product.price.toFixed(2).replace(".",",");
                     return <Button 
                     className={classPosition} 
                     id={index}
@@ -126,53 +128,54 @@ const productDayTime = [
                     text={valBtn} />
                   })
                 }
-                <div class="order-list">
+                <section className="client-name">
+                <p>CLIENTE</p>
+                <input type="text"/>
+                </section>
+                <OrderList value={total.toFixed(2).replace(".",",")}>
                   {
                     this.state.order.map((product, index) => {
-                      return <div key = {index}> 
-                        <p>{product.name} - {product.price}
-                      - {product.amount} </p>
-                      <button onClick={() => this.deleteItem(product)}>Excluir</button>
-                      </div>
+                      return <ListItem 
+                      key = {index} 
+                      name={product.name} 
+                      price={product.price.toFixed(2).replace(".",",")} 
+                      amount={product.amount} 
+                      onClick={() => this.deleteItem(product)}/>
                     })
                   }
-                  <h1>Total</h1>
-                  <p>Valor total: {total}</p>
-                </div>
+                </OrderList>
+                <Button className="btn listItem btn-send-kitchen" text="ENVIAR A COZINHA" />
               </div>
               </Tab>
             </li>
             <li>
               <Tab classNameContent="tab-content order-content" id="tab2" text="TARDE"> 
               <div className="content"> 
-              <p className="title-hamb">HAMBÚRGUERES</p>
-              <p className="title-acomp">ACOMPANHAMENTOS</p>
-              <p className="title-drinks">BEBIDAS</p>
+              <p className="title-order-one">HAMBÚRGUERES</p>
+              <p className="title-order-two">ACOMPANHAMENTOS</p>
+              <p className="title-order-three">BEBIDAS</p>
               {
                 productDayTime.map((product, index) => {
                   const classPosition = "btn listItem btn" + index;
-                  const valBtn = product.name +"  R$"+ product.price;
+                  const valBtn = product.name +"  R$"+ product.price.toFixed(2).replace(".",",");
                   return <Button 
                   className={classPosition}
                   onClick={() => this.selectItem(product)} 
                   key={index} 
                   text={valBtn}/>
-                  
                 })
               }
-              <div class="order-list">
-                {
-                  this.state.order.map((product, index) => {
-                    return <div key = {index}> 
-                      <p>{product.name} - {product.price}
-                    - {product.amount} </p>
-                    <button onClick={() => this.deleteItem(product)}>Excluir</button>
-                    </div>
-                  })
-                }
-                <h1>Total</h1>
-                <p>Valor total: {total}</p>
-              </div>
+                <OrderList value={total.toFixed(2).replace(".",",")}>
+                  {
+                    this.state.order.map((product, index) => {
+                      return <ListItem key = {index} 
+                      name={product.name} 
+                      price={product.price.toFixed(2).replace(".",",")} 
+                      amount={product.amount} 
+                      onClick={() => this.deleteItem(product)}/>
+                    })
+                  }
+                </OrderList>
               </div>
               </Tab>
             </li>
