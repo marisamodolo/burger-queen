@@ -105,6 +105,7 @@ const productDayTime = [
     const total = this.state.order.reduce((acc, cur) => { 
       return acc + (cur.amount * cur.price)
     }, 0)
+    console.log(this.state.order)
 
     return (
       <div className="App">
