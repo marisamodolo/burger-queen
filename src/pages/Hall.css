@@ -130,6 +130,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 7fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     text-align: center;
     align-items: center;
 }
@@ -139,6 +140,10 @@
 }
 .product-name{
     grid-column: 2;
+}
+.product-obs{
+    grid-column: 2;
+    grid-row: 2;
 }
 .product-price{
     grid-column: 3;
