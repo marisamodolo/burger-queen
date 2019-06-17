@@ -126,13 +126,17 @@
     grid-row: 3;
 }
 
-.div-product{
+.div-product-hamb, .div-product{
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 7fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     text-align: center;
     align-items: center;
+}
+
+.div-product{
+    grid-template-rows: 1fr;
 }
 
 .product-qnt{
@@ -144,6 +148,9 @@
 .product-obs{
     grid-column: 2;
     grid-row: 2;
+}
+.none{
+    display: none;
 }
 .product-price{
     grid-column: 3;

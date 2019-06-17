@@ -8,14 +8,21 @@ import ObsModal from '../components/ObsModal'
 import './Hall.css'
 import firebase from '../firebaseConfig';
 
-export default function () {
+export default function (props) {
   const [productMorning, setProductMorning] = useState([])
   const [productDayTime, setProductDayTime] = useState([])
+  const [clientName, setClientName] = useState("");
   const [order, setOrder] = useState([]);
+  const [obs, setObs] = useState({hamburguer: "carne bovina", eggs: false,  cheese: false});
   const [total, setTotal] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [actualProduct, setActualProduct] = useState({});
+  const user = firebase.auth().currentUser;
 
   useEffect(() => {
+    if (!user){ 
+      props.history.push('/')
+  }
     firebase.firestore().collection('Menu').doc('menu-list').get().then((result) =>{
       setProductMorning(result.data().productMorning)
       setProductDayTime(result.data().productDayTime)
@@ -27,7 +34,20 @@ export default function () {
     setTotal(order.reduce((acc, cur) => { 
     return acc + (cur.amount * cur.price)
     }, 0));
+    console.log(order)
   }, [order])
+
+
+  function SendOrderToFirebase(){
+    if(clientName === "") {
+      alert("Informe o nome do cliente.")
+    }else{
+    firebase.firestore().collection('Order').doc().set({
+      clientName,
+      order
+    })
+    }
+  }
 
   function renewMinorState(curArray){
     let newArray = [];
@@ -57,31 +77,41 @@ export default function () {
       return <Button 
       className={classPosition} 
       id={index}
-      onClick={() => callFunction(product)} 
+      onClick={(event) => callFunction(product, event)} 
       key={index} 
       text={valBtn} />
     })
   }
 
-  function obsModal(){
+  function obsModal(item, event){
     setModalIsOpen(true)
+    setActualProduct(event.target.id)
   }
 
-  function OrderItem () {
-    return order.map((product, index) => {
-      return <ListItem 
-      key = {index} 
-      name={product.name} 
-      price={product.price.toFixed(2).replace(".",",")} 
-      amount={product.amount} 
-      obs="carne bovina"
-      onClick={() => deleteItem(product)}
-      />
-    })
+  function attItem(item){
+    const product = productDayTime[item];
+    const { hamburguer } = obs;
+    const additional = []; 
+    Object.keys(obs).forEach(function(key) {
+      if (obs[key] === true) {
+        additional.push(key)
+      }
+    });
+    const newItem = {
+      ...product,
+        hamburguer,
+        additional
+    }
+    addItem(newItem)
+    setObs({hamburguer: "carne bovina", eggs: false,  cheese: false})
+    setModalIsOpen(false)
   }
 
   function addItem(item) {
-    if (findItem(item) < 0){
+    let additionalPrice;
+    item.additional === undefined ? additionalPrice = 0 : additionalPrice = item.additional.length;
+    if (findItem(item) < 0 || item.name === "Hambúrguer Simples" || item.name === "Hambúrguer Duplo"){
+      item.price += additionalPrice;
       const newItem = {
         ...item,
         amount: 1
@@ -91,6 +121,32 @@ export default function () {
       order[findItem(item)].amount += 1;
       setOrder(renewMinorState(order))
     }
+  }
+
+  function OrderItem () {
+    return order.map((product, index) => {
+      const { additional, hamburguer, name, price, amount } = product;
+      let plus = "";
+      let itemClass = "none";
+      let classDiv = "div-product";
+      if(product.name === "Hambúrguer Simples" || product.name === "Hambúrguer Duplo")
+      {
+        plus = hamburguer + " - " + additional.map((add) => { return add })
+        itemClass = "product-obs";
+        classDiv = "div-product-hamb";
+      }     
+
+      return <ListItem 
+      classNameDiv = {classDiv}
+      key = {index} 
+      name={name} 
+      price={price.toFixed(2).replace(".",",")} 
+      amount={amount} 
+      obs={plus}
+      className = {itemClass}
+      onClick={() => deleteItem(product)}
+      />
+    })
   }
 
   function deleteItem(item){
@@ -117,12 +173,12 @@ export default function () {
                     { btnProducts(productMorning) }
                   <section className="client-name">
                     <p>CLIENTE</p>
-                    <input type="text"/>
+                    <input value={clientName} onChange={(event) => setClientName(event.target.value)} type="text"/>
                   </section>
                   <OrderList value={total.toFixed(2).replace(".",",")}>
                     { OrderItem() }
                   </OrderList>
-                  <Button className="btn listItem btn-send-kitchen" text="ENVIAR A COZINHA" />
+                  <Button className="btn listItem btn-send-kitchen" onClick={() => SendOrderToFirebase()}text="ENVIAR A COZINHA" />
                 </div>
               </Tab>
             </li>
@@ -135,19 +191,24 @@ export default function () {
                 { btnProducts(productDayTime) }
                 <section className="client-name">
                     <p>CLIENTE</p>
-                    <input type="text"/>
+                    <input value={clientName} onChange={(event) => setClientName(event.target.value)} type="text"/>
                 </section>
                 <OrderList value={total.toFixed(2).replace(".",",")}>
                   { OrderItem() }
                 </OrderList>
-                <Button className="btn listItem btn-send-kitchen" text="ENVIAR A COZINHA" />
+                <Button className="btn listItem btn-send-kitchen" onClick={() => SendOrderToFirebase()} text="ENVIAR A COZINHA" />
               </div>
               </Tab>
             </li>
           </ul>
         </nav>
         <Modal className="modal-style" isOpen={modalIsOpen} onRequestClose={()=>setModalIsOpen(false)}>
-          <ObsModal onClickClose={()=>setModalIsOpen(false)}/>  
+          <ObsModal 
+          onClick={() => attItem(actualProduct)} 
+          onChangeEggs={(event)=> setObs({...obs, eggs: event.target.checked})} 
+          onChangeCheese={(event)=> setObs({...obs, cheese: event.target.checked})} 
+          onChangeHamb={event => setObs({...obs, hamburguer: event.target.value})}
+          onClickClose={()=>setModalIsOpen(false)} /> 
         </Modal>
       </header>
     </div>
