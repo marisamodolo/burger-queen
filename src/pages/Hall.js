@@ -21,7 +21,7 @@ export default function (props) {
 
   useEffect(() => {
     if (!user){ 
-      props.history.push('/')
+      return props.history.push('/')
     }
     firebase.firestore().collection('Menu').doc('menu-list').get().then((result) => {
       setProductMorning(result.data().productMorning)

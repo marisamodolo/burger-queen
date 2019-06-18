@@ -10,25 +10,31 @@ export default function (props) {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    firebase.firestore().collection("Order").get().then(function(querySnapshot) {
+    firebase.firestore().collection("Order")
+    .get()
+    .then(function(querySnapshot) {
+      const listItem = [];
       querySnapshot.forEach(function(doc) {
-         list.push(doc.data());
+        listItem.push(doc.data())
       });
-    });
-    console.log(teste())
+      return listItem;
+    })
+    .then(data => setList(data));
   }, [])
 
   function teste(){
-    return list.map((item) => {
-       return item.order.map((order) => {
-        return order.name
+    list.map((item) => {
+     item.order.map((order) => {
+        console.log( order.name)
       })
     })
   }
 
-
   return(
     <div className="App">
+    { list.map( x => (
+      <span>{ x.clientName }</span>
+    )) }
       <header className="kitchen-header">
         <section className="main_kitchen">
           <section className="order-from-firebase">
