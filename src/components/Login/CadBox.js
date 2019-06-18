@@ -17,13 +17,17 @@ export default function CadBox (props){
 		if (name !== "") {
 			firebaseAppAuth.createUserWithEmailAndPassword(email, password)
 			.then((result) => {
+				firebase.auth().currentUser.updateProfile({
+					displayName: name
+				  })
 				firebase.firestore().collection('users').doc(result.user.uid).set({
-					'name': name,
-					'area' : area
+					name,
+					area
 				})
 				return props.history.push("/" + area)   
 			})
-			.catch(() => {
+			.catch((error) => {
+				console.log(error)
 				alert("Oops. Algo deu errado! :( \nCheque se o e-mail está escrito corretamente e se sua senha possui pelo menos 6 caracteres.")
 			});
 		}else{

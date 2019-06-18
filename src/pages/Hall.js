@@ -22,19 +22,17 @@ export default function (props) {
   useEffect(() => {
     if (!user){ 
       props.history.push('/')
-  }
-    firebase.firestore().collection('Menu').doc('menu-list').get().then((result) =>{
+    }
+    firebase.firestore().collection('Menu').doc('menu-list').get().then((result) => {
       setProductMorning(result.data().productMorning)
       setProductDayTime(result.data().productDayTime)
     })
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    OrderItem();
     setTotal(order.reduce((acc, cur) => { 
     return acc + (cur.amount * cur.price)
     }, 0));
-    console.log(order)
   }, [order])
 
 
@@ -43,10 +41,20 @@ export default function (props) {
       alert("Informe o nome do cliente.")
     }else{
     firebase.firestore().collection('Order').doc().set({
+      employee: user.displayName,
       clientName,
       order
     })
+    .then(() => {
+      alert("Pedido Enviado a Cozinha :)")
+      setClientName("")
+      setOrder([])
+    })
+    .catch(() => {
+      alert("Oops. Não foi possível enviar seu pedido.")
+    })
     }
+
   }
 
   function renewMinorState(curArray){
