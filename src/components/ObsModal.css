@@ -7,7 +7,7 @@
 
 .grid-additional{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 0.5fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr 0.5fr 1fr;
     padding: 10px;
 }
 
@@ -22,7 +22,7 @@
     grid-row: 3;
     text-align: start;
     align-self: end;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 	font-weight: 700;
 	color: #ff6620;
 }
@@ -38,7 +38,7 @@
     grid-row: 5;
     display: inline-flex;
     justify-content: space-evenly;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 	font-weight: 700;
 	color: #ff6620;
 }

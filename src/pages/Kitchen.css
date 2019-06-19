@@ -13,7 +13,7 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-.order-from-firebase{
+.order-from-firebase, .display-full-order{
     grid-column: 1;
     width: 90%;
     height: 90%;
@@ -21,4 +21,52 @@
     justify-self: center;
     align-self: center;
     border-radius: 5px;
+    overflow: auto;
+}
+
+.display-full-order{
+    grid-column: 2;
+    display: grid;
+}
+
+.shown-order{
+    display: grid;
+    width: 95%;
+    height: 90%;
+    justify-self: center;
+    align-self: center;
+}
+
+.btn-sign-out{
+    position: absolute;
+    align-self: start;
+    justify-self: end;
+    font-size: 2rem;
+    margin-right: 0.5rem;
+    color: #ff6620;
+    cursor: pointer;
+}
+
+.btn-sign-out:hover{
+    color: #f8b798;
+}
+
+.item-shown-kitchen{
+ text-align: left;
+ align-self: center;
+ font-size: 1.5rem;
+}
+
+.order-list-kitchen{
+    background-color: #420039;
+    color: #bdbdbd;
+    margin: 1rem;
+}
+
+.btns-section-kitchen{
+    align-self: end;
+}
+
+.btn-preparation{
+    font-size: 1rem;
 }
