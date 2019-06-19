@@ -13,7 +13,7 @@ export default function (props) {
   const [productDayTime, setProductDayTime] = useState([])
   const [clientName, setClientName] = useState("");
   const [order, setOrder] = useState([]);
-  const [obs, setObs] = useState({hamburguer: "carne bovina", eggs: false,  cheese: false});
+  const [obs, setObs] = useState({hamburguer: "carne bovina", ovos: false,  queijo: false});
   const [total, setTotal] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [actualProduct, setActualProduct] = useState({});
@@ -27,7 +27,7 @@ export default function (props) {
       setProductMorning(result.data().productMorning)
       setProductDayTime(result.data().productDayTime)
     })
-  }, [user])
+  })
 
   useEffect(() => {
     setTotal(order.reduce((acc, cur) => { 
@@ -43,7 +43,8 @@ export default function (props) {
     firebase.firestore().collection('Order').doc().set({
       employee: user.displayName,
       clientName,
-      order
+      order,
+      situation: "Pedido Feito"
     })
     .then(() => {
       alert("Pedido Enviado a Cozinha :)")
@@ -111,7 +112,7 @@ export default function (props) {
         additional
     }
     addItem(newItem)
-    setObs({hamburguer: "carne bovina", eggs: false,  cheese: false})
+    setObs({hamburguer: "carne bovina", ovos: false,  queijo: false})
     setModalIsOpen(false)
   }
 
@@ -139,7 +140,7 @@ export default function (props) {
       let classDiv = "div-product";
       if(product.name === "Hambúrguer Simples" || product.name === "Hambúrguer Duplo")
       {
-        plus = hamburguer + " - " + additional.map((add) => { return add })
+        plus = hamburguer + " - " + additional.map((add) => ( add )).join(" e ")
         itemClass = "product-obs";
         classDiv = "div-product-hamb";
       }     
@@ -171,6 +172,9 @@ export default function (props) {
   return(
     <div className="App">
       <header className="App-header">
+      <i className="fas fa-sign-out-alt btn-sign-out" 
+      onClick={() => firebase.auth().signOut().then(() => (props.history.push('/')))}>
+      </i>
         <nav className="nav_tabs order-tabs">
           <ul>
             <li>
@@ -213,8 +217,8 @@ export default function (props) {
         <Modal className="modal-style" isOpen={modalIsOpen} onRequestClose={()=>setModalIsOpen(false)}>
           <ObsModal 
           onClick={() => attItem(actualProduct)} 
-          onChangeEggs={(event)=> setObs({...obs, eggs: event.target.checked})} 
-          onChangeCheese={(event)=> setObs({...obs, cheese: event.target.checked})} 
+          onChangeEggs={(event)=> setObs({...obs, ovos: event.target.checked})} 
+          onChangeCheese={(event)=> setObs({...obs, queijo: event.target.checked})} 
           onChangeHamb={event => setObs({...obs, hamburguer: event.target.value})}
           onClickClose={()=>setModalIsOpen(false)} /> 
         </Modal>
