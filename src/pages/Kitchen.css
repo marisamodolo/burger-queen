@@ -1,0 +1,24 @@
+.kitchen-header{
+    background-color: #420039;
+    min-height: 100vh;
+    display: grid;
+}
+
+.main_kitchen{
+    width: 90%;
+    height: 90%;
+    margin: 2.5%;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.order-from-firebase{
+    grid-column: 1;
+    width: 90%;
+    height: 90%;
+    background-color: #bdbdbd;
+    justify-self: center;
+    align-self: center;
+    border-radius: 5px;
+}

@@ -1,0 +1,62 @@
+.modal-style{
+    background-color: #f7f7fc;
+    width: 31%;
+    margin: 33%;
+    margin-top: 10%;
+}
+
+.grid-additional{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 0.5fr 1fr;
+    padding: 10px;
+}
+
+.title-type{
+    grid-row: 2;
+    color:#242342;
+    text-align: center;
+	align-self: end;
+}
+
+.div-opt-hamburguer{
+    grid-row: 3;
+    text-align: start;
+    align-self: end;
+    font-size: 1.5rem;
+	font-weight: 700;
+	color: #ff6620;
+}
+
+.title-additional{
+    grid-row: 4;
+    color:#242342;
+    text-align: center;
+	align-self: end;
+}
+
+.div-opt-additional{
+    grid-row: 5;
+    display: inline-flex;
+    justify-content: space-evenly;
+    font-size: 1.5rem;
+	font-weight: 700;
+	color: #ff6620;
+}
+
+label{
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.btn-send{
+    grid-row: 6;
+    justify-self: center;
+}
+
+@media (orientation: portrait) { 
+    .modal-style{
+        width: 50%;
+        margin: 25%;
+    }
+}
+
